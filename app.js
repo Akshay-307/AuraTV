@@ -390,7 +390,9 @@ function playMedia(id, type, title, season = 1, episode = 1) {
                 : `https://player.vidzee.wtf/v2/embed/tv/${id}/${season}/${episode}`;
         }
         
-        document.getElementById("player-iframe").src = embedUrl;
+        const iframe = document.getElementById("player-iframe");
+        iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-presentation");
+        iframe.src = embedUrl;
     };
     
     // Trigger initial load and setup switch listener
