@@ -19,6 +19,44 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Splash Screen & Ad Wall Overlay -->
+    <div id="splash-overlay" class="splash-overlay">
+        <!-- Step 1: Splash Screen -->
+        <div id="splash-screen" class="splash-screen-content">
+            <div class="splash-logo">A</div>
+            <h1 class="splash-title">AURA</h1>
+            <p class="splash-subtitle">Stream. Discover. Enjoy.</p>
+            <div class="splash-loader">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+
+        <!-- Step 2: Ad Wall Screen (Initially hidden) -->
+        <div id="ad-wall-screen" class="ad-wall-content" style="display: none;">
+            <div class="ad-header">
+                <span class="ad-badge">ADVERTISEMENT</span>
+                <span id="ad-status" class="ad-status">Initializing secure tunnel…</span>
+            </div>
+            
+            <div class="ad-container">
+                <div class="mock-ad-banner">
+                    <img id="mock-ad-image" src="premium_ad_banner.png" alt="Premium Sponsor ad">
+                    <div class="mock-ad-overlay">
+                        <div class="mock-ad-title">Aura Premium</div>
+                        <div class="mock-ad-desc">Stream in 4K HDR, experience zero ad interruptions, and enjoy instant fast mirrors.</div>
+                        <button class="btn btn-primary mock-ad-btn" onclick="event.preventDefault();">Upgrade Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ad-actions">
+                <button id="skip-ad-btn" class="btn btn-secondary skip-ad-btn" disabled>
+                    <span id="skip-timer">Verify secure connection…</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Ambient backdrops -->
     <div class="ambient-glow" aria-hidden="true">
         <div class="glow-orb orb-1"></div>
@@ -196,7 +234,7 @@
                 </div>
             </div>
             <div class="player-iframe-wrapper">
-                <iframe id="player-iframe" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"></iframe>
+                <iframe id="player-iframe" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
             </div>
         </div>
     </div>

@@ -48,15 +48,80 @@ async function fetchJson(path, queryParams = "") {
     }
 }
 
+let isVideoPlaying = false;
+
+// Redirection prevention blocker
+window.addEventListener("beforeunload", (e) => {
+    if (isVideoPlaying) {
+        e.preventDefault();
+        e.returnValue = "Are you sure you want to exit the player?";
+        return "Are you sure you want to exit the player?";
+    }
+});
+
 // App Initialization
 document.addEventListener("DOMContentLoaded", () => {
     initApp();
     setupEventListeners();
+    runSplashAndAdWall();
 });
 
 async function initApp() {
     loadHomeContent();
     renderWatchlist();
+}
+
+function runSplashAndAdWall() {
+    const overlay = document.getElementById("splash-overlay");
+    const splashScreen = document.getElementById("splash-screen");
+    const adWallScreen = document.getElementById("ad-wall-screen");
+    const adStatus = document.getElementById("ad-status");
+    const skipBtn = document.getElementById("skip-ad-btn");
+    
+    if (!overlay) return;
+
+    // Phase 1: Splash screen displays for 2 seconds
+    setTimeout(() => {
+        splashScreen.style.display = "none";
+        adWallScreen.style.display = "flex";
+        
+        // Phase 2: Simulate ad loading sequence just like android app
+        setTimeout(() => {
+            adStatus.innerText = "Fetching security challenge…";
+            
+            setTimeout(() => {
+                adStatus.innerText = "Starting verification…";
+                
+                setTimeout(() => {
+                    adStatus.innerText = "Verification challenge active";
+                    startAdCountdown();
+                }, 1000);
+            }, 1500);
+        }, 1500);
+    }, 2000);
+
+    function startAdCountdown() {
+        let timeLeft = 5;
+        skipBtn.disabled = true;
+        
+        const updateTimer = () => {
+            if (timeLeft > 0) {
+                skipBtn.innerHTML = `<span>Skip Ad in ${timeLeft}s…</span>`;
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            } else {
+                skipBtn.disabled = false;
+                skipBtn.innerHTML = `<span>Skip Ad & Enter</span>`;
+                skipBtn.onclick = () => {
+                    overlay.classList.add("fade-out");
+                    setTimeout(() => {
+                        overlay.remove();
+                    }, 500);
+                };
+            }
+        };
+        updateTimer();
+    }
 }
 
 // Event listener configuration
@@ -84,6 +149,7 @@ function setupEventListeners() {
     
     // Close Player Modal
     document.getElementById("player-back-btn").addEventListener("click", () => {
+        isVideoPlaying = false;
         const playerModal = document.getElementById("player-modal");
         playerModal.style.display = "none";
         document.getElementById("player-iframe").src = ""; // Stop audio/video playback
@@ -357,6 +423,7 @@ async function loadSeasonEpisodes(tvId, seasonNum, seriesTitle) {
 
 // Plays streaming link in fullscreen Iframe modal
 function playMedia(id, type, title, season = 1, episode = 1) {
+    isVideoPlaying = true;
     document.getElementById("detail-modal").style.display = "none";
     const playerModal = document.getElementById("player-modal");
     playerModal.style.display = "block";
@@ -391,7 +458,7 @@ function playMedia(id, type, title, season = 1, episode = 1) {
         }
         
         const iframe = document.getElementById("player-iframe");
-        iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-presentation");
+        iframe.removeAttribute("sandbox");
         iframe.src = embedUrl;
     };
     
