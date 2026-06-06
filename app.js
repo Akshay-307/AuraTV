@@ -458,7 +458,11 @@ function playMedia(id, type, title, season = 1, episode = 1) {
         }
         
         const iframe = document.getElementById("player-iframe");
-        iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-presentation allow-top-navigation");
+        if (server === "peachify") {
+            iframe.removeAttribute("sandbox");
+        } else {
+            iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-presentation");
+        }
         iframe.src = embedUrl;
     };
     
