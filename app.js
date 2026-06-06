@@ -458,7 +458,7 @@ function playMedia(id, type, title, season = 1, episode = 1) {
         }
         
         const iframe = document.getElementById("player-iframe");
-        iframe.removeAttribute("sandbox");
+        iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-presentation allow-top-navigation");
         iframe.src = embedUrl;
     };
     

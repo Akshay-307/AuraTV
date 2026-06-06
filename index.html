@@ -23,7 +23,9 @@
     <div id="splash-overlay" class="splash-overlay">
         <!-- Step 1: Splash Screen -->
         <div id="splash-screen" class="splash-screen-content">
-            <div class="splash-logo">A</div>
+            <div class="splash-logo">
+                <img src="ic_launcher.png" alt="AURA Logo" width="60" height="60" style="object-fit: contain;">
+            </div>
             <h1 class="splash-title">AURA</h1>
             <p class="splash-subtitle">Stream. Discover. Enjoy.</p>
             <div class="splash-loader">
@@ -39,13 +41,19 @@
             </div>
             
             <div class="ad-container">
-                <div class="mock-ad-banner">
-                    <img id="mock-ad-image" src="premium_ad_banner.png" alt="Premium Sponsor ad">
-                    <div class="mock-ad-overlay">
-                        <div class="mock-ad-title">Aura Premium</div>
-                        <div class="mock-ad-desc">Stream in 4K HDR, experience zero ad interruptions, and enjoy instant fast mirrors.</div>
-                        <button class="btn btn-primary mock-ad-btn" onclick="event.preventDefault();">Upgrade Now</button>
+                <div class="startio-ad-card">
+                    <div class="startio-ad-header">
+                        <img src="ic_launcher.png" alt="AURA Logo" class="startio-ad-icon">
+                        <div class="startio-ad-meta">
+                            <h4 class="startio-ad-title">AURA App for Android</h4>
+                            <span class="startio-ad-provider">Ads by Start.io</span>
+                        </div>
+                        <div class="startio-ad-rating">
+                            <span>⭐ 4.9</span>
+                        </div>
                     </div>
+                    <p class="startio-ad-description">Experience premium ad-free streaming on your phone or TV. Import playlists, watch anime, movies, and IPTV with advanced player features.</p>
+                    <a href="https://github.com/Akshay-307/Aura-Releases/releases/latest/download/app-release.apk" class="btn btn-primary startio-ad-action-btn">Install Free APK</a>
                 </div>
             </div>
 
@@ -66,7 +74,7 @@
     <!-- Navigation Header -->
     <header class="navbar" id="navbar">
         <div class="nav-brand">
-            <span class="brand-logo">A</span>
+            <img src="ic_launcher.png" alt="AURA Logo" class="brand-logo-img" width="32" height="32">
             <span class="brand-title">AURA</span>
         </div>
         
@@ -234,7 +242,7 @@
                 </div>
             </div>
             <div class="player-iframe-wrapper">
-                <iframe id="player-iframe" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+                <iframe id="player-iframe" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-top-navigation"></iframe>
             </div>
         </div>
     </div>
