@@ -73,55 +73,15 @@ async function initApp() {
 
 function runSplashAndAdWall() {
     const overlay = document.getElementById("splash-overlay");
-    const splashScreen = document.getElementById("splash-screen");
-    const adWallScreen = document.getElementById("ad-wall-screen");
-    const adStatus = document.getElementById("ad-status");
-    const skipBtn = document.getElementById("skip-ad-btn");
-    
     if (!overlay) return;
 
-    // Phase 1: Splash screen displays for 2 seconds
+    // Splash screen displays for 1.5 seconds, then fades out and enters the app directly
     setTimeout(() => {
-        splashScreen.style.display = "none";
-        adWallScreen.style.display = "flex";
-        
-        // Phase 2: Simulate ad loading sequence just like android app
+        overlay.classList.add("fade-out");
         setTimeout(() => {
-            adStatus.innerText = "Fetching security challenge…";
-            
-            setTimeout(() => {
-                adStatus.innerText = "Starting verification…";
-                
-                setTimeout(() => {
-                    adStatus.innerText = "Verification challenge active";
-                    startAdCountdown();
-                }, 1000);
-            }, 1500);
-        }, 1500);
-    }, 2000);
-
-    function startAdCountdown() {
-        let timeLeft = 5;
-        skipBtn.disabled = true;
-        
-        const updateTimer = () => {
-            if (timeLeft > 0) {
-                skipBtn.innerHTML = `<span>Skip Ad in ${timeLeft}s…</span>`;
-                timeLeft--;
-                setTimeout(updateTimer, 1000);
-            } else {
-                skipBtn.disabled = false;
-                skipBtn.innerHTML = `<span>Skip Ad & Enter</span>`;
-                skipBtn.onclick = () => {
-                    overlay.classList.add("fade-out");
-                    setTimeout(() => {
-                        overlay.remove();
-                    }, 500);
-                };
-            }
-        };
-        updateTimer();
-    }
+            overlay.remove();
+        }, 500);
+    }, 1500);
 }
 
 // Event listener configuration
@@ -458,11 +418,7 @@ function playMedia(id, type, title, season = 1, episode = 1) {
         }
         
         const iframe = document.getElementById("player-iframe");
-        if (server === "peachify") {
-            iframe.removeAttribute("sandbox");
-        } else {
-            iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-presentation");
-        }
+        iframe.removeAttribute("sandbox");
         iframe.src = embedUrl;
     };
     
